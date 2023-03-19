@@ -11,7 +11,7 @@ app.use(express.static('public'))
 
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
-// activer le middleware et lancer l'application sur le port 3000
+
 
 app.listen(4000, () => console.log('le serveur Asimov est prêt.'))
 
