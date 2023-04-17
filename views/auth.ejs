@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asimov</title>
+    <link rel="icon" type="image/png" sizes="16*16" href="/images/">
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<section class="vh-100">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-12 col-md-8 col-lg-6 col-xl-5 ">
+          <div class="card shadow-2-strong " style="border-radius: 1rem;">
+            <div class="card-body p-5 text-center ">
+                
+            
+                <div class="mb-5">
+                    <h1 >Connexion</h1>
+                    <p style="font-size:smaller; color: rgb(103, 103, 103);" >Veuillez vous connecter pour accéder à ASIMOV</p>
+                </div>
+              
+  
+                <form action="/auth" method="post" enctype="application/x-www-form-urlencoded">
+                  <div class="row justify-content-center">
+                    <div class="form-outline mb-4">
+                      <label class="form-label" for="identifiant" style="font-size:smaller; color: rgb(103, 103, 103);">Identifiant</label>
+                      <input type="text" id="identifiant" class="form-control text-center" placeholder="nom.prenom" name="identifiant" />
+                    </div>
+        
+                    <div class="form-outline mb-5">
+                      <label class="form-label" for="mdp" style="font-size:smaller; color: rgb(103, 103, 103);">Mot de passe</label>
+                      <input type="password" id="mdp" class="form-control text-center" placeholder="" name="mdp" />
+                    </div>
+        
+                    <button type="submit" class="btn btn-dark w-25" id="btnConnexion">Connexion</button>
+                  </div>
+                </form>
+                
+              <hr class="my-4">
+
+              <p style="font-size:smaller; color: rgb(103, 103, 103);" >vous avez oubliez votre mot de passe ? <a href="#">Réinitialisez le !</a></p>
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
