@@ -17,7 +17,7 @@ CREATE TABLE eleve (
     nom_eleve varchar(30) not null,
     prenom_eleve varchar(30) not null,
     age_eleve VARCHAR(2) NOT NULL,
-    id_classe varchar(30) not null,
+    id_classe int not null,
     primary key (id_eleve)
 );
 
