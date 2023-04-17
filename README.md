@@ -1,6 +1,6 @@
 # Asimov
 
-<div height="135" align="center">
+<div height="120" align="center">
     <img src="public/images/collegeAsimov.png" />
 </div>
 
@@ -12,11 +12,10 @@ Projet scolaire.
 
 __Contexte :__
 
-+ La fondation souhaite qu'un logiciel de suivi des élèves soit mis en place. Le premier concept est
-+ l'usage de pourcentage de réussite plutôt que des notes sur 20.
-+ Le développement de cette application doit se faire en toute indépendance des systèmes scolaires
-+ actuels (ENT, Pronote, Ecole Directe). Lors de l'appel d'offre, votre société a été retenue pour répondre
-+ au cahier des charges.
+La fondation souhaite qu'un logiciel de suivi des élèves soit mis en place. Le premier concept est l'usage de pourcentage de réussite plutôt que des notes sur 20.
+Le développement de cette application doit se faire en toute indépendance des systèmes scolaires actuels (ENT, Pronote, Ecole Directe).
+Lors de l'appel d'offre, votre société a été retenue pour répondre au cahier des charges.
+
 ------------------------------------------------------------------------------------------------------------
 
 # ORGANISATION
