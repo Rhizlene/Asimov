@@ -20,7 +20,7 @@ mysqlconnexion.connect((err) => {
 
 const authAsimov = {
 
-    async Auth(req) {
+    async AuthPersonnel(req) {
 
         let identifiant = req.body.identifiant
         let mdp = req.body.mdp
@@ -43,13 +43,34 @@ const authAsimov = {
 
             })
         })
+    },
+
+    async AuthEleve(req){
+
+        let identifiant = req.body.identifiant
+        let mdp = req.body.mdp
+        let requeteSQL = "SELECT *, COUNT(*) FROM eleve WHERE CONCAT(nom_eleve, '.', prenom_eleve) = ? AND mdp = ?"
+
+        return new Promise((resolve, reject) => {
+
+            mysqlconnexion.query(requeteSQL, [identifiant, mdp],(err, lignes) => {
+
+                if(err){
+
+                    return reject(err)
+
+                }
+                
+                return resolve(lignes)
+
+            })
+        })
     }
 }
+
+
 
 module.exports = {
     authAsimov
 }
 
-//SELECT *, CONCAT(nom_perso, '.', prenom_perso) AS identifiant, mdp 
-// FROM personnel 
-// HAVING identifiant = 'alfardous.rhizlene' AND mdp = 'root'

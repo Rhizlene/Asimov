@@ -17,14 +17,9 @@ app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 
 app.listen(port, () => console.log('le serveur Asimov est prêt.'))
 
-// utiliser les routeurs
+// Afficher la page connexion
 app.get('/', (req, res) => {
-    res.send('Asimov est actif');
-});
-
-//Afficher page accueil
-app.get('/accueil', function(req, res) {
-    res.render('accueil');
+    res.render('auth');
 });
 
 
@@ -32,12 +27,6 @@ app.get('/accueil', function(req, res) {
 const routeAuth = require('./routes/routeAuth');
 
 
-// Afficher la page connexion
-app.get('/auth', function(req, res) {
-    res.render('auth');
-});
-
-
 // utiliser les routes
-app.use('/Auth', routeAuth);
+app.use('/', routeAuth);
 

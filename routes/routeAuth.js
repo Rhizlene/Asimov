@@ -5,16 +5,27 @@ const { controlAuth, authorize } = require('../controllers/authController');
 
 routeur.post('/', controlAuth.Authentification)
 
-// Votre route protégée par JWT
-routeur.post('/accueil', controlAuth.Authentification, authorize('2'));
+
+routeur.get('/', (req, res) => {
+    res.render('index');
+  });
+  
+  routeur.get('/auth', (req, res) => {
+    res.render('auth');
+  });
+  
+  routeur.post('/auth', controlAuth.Authentification);
+  
+  routeur.get('/accueil', controlAuth.Accueil);
+  
+  routeur.get('/logout', controlAuth.logout);
+  
+
+
+
+// route protégée par JWT
+// routeur.post('/accueil', authorize, controlAuth.Authentification );
 
 module.exports = routeur;
 
-
-
-// // Route pour la déconnexion
-// router.get('/logout', (req, res) => {
-//   res.clearCookie('accessToken');
-//   res.redirect('/');
-// });
 

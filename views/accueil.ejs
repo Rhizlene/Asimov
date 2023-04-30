@@ -1,1 +1,9 @@
-accueil
+
+    <% if(jwtData.roles == 2){%>
+        <%- include('headerProfesseur') %>
+    <% }else if(jwtData.roles == 3){ %>
+        <%- include('headerProviseur') %>
+    <% }else{ %>
+        <%- include('headerEleve') %>
+    <% } %>
+

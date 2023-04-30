@@ -33,6 +33,13 @@
                       <label class="form-label" for="mdp" style="font-size:smaller; color: rgb(103, 103, 103);">Mot de passe</label>
                       <input type="password" id="mdp" class="form-control text-center" placeholder="" name="mdp" />
                     </div>
+
+                    <% if (typeof errorMessage !== 'undefined' && errorMessage !== null && errorMessage !== '') { %>
+                      <div class="alert alert-danger" role="alert">
+                        <%= errorMessage %>
+                      </div>
+                   
+                    <% } %>
         
                     <button type="submit" class="btn btn-dark w-25" id="btnConnexion">Connexion</button>
                   </div>
