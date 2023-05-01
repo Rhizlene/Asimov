@@ -10,14 +10,15 @@
   
     <div class="container my-5 w-50 text-center">
   
-      <h2 class="mb-4">Liste des matières</h2>
+      <h2 class="mb-4">Liste des matières </h2>
   
       <div class="table-responsive">
         <table class="table table-striped table-hover text-center">
           <thead>
             <tr>
               <th>Nom</th>
-              <th>Professeur</th>
+              <th>Enseignant</th>
+              <th>Modifier</th>
               <th>Suppression</th>
             </tr>
           </thead>
@@ -30,10 +31,11 @@
                         <%= data.nom_perso %>
                         <%= data.prenom_perso %>
                     <% }catch{ %>
-                        Non défini
+                        Non renseigné
                     <% } %>
                   </td>
-                <td><a class="btn btn-outline-danger btn-sm" href="http://localhost:3600/matieres/supprimerMatiere/<%=data.matiere_Id%>"> Supprimer </a></td>
+                  <td><a class="btn btn-outline-info btn-sm" href="http://localhost:4000/matieres/modifierMatiere/<%=data.id_matiere%>"> ✏️ </a></td>
+                <td><a class="btn btn-outline-danger btn-sm" href="http://localhost:4000/matieres/supprimerMatiere/<%=data.id_matiere%>"> ❌ </a></td>
               </tr>
             <% })%>
           </tbody>
@@ -47,19 +49,20 @@
             <span for="nom" class="col-sm-2 input-group-text">Nom</span>
               <input type="text" class="form-control" name="nom" id="nom">
           </div>
-          <span for = "professeur", style="margin-right: 10px;">Professeur:</span>
-          <select type = "text" name = "professeur" id = "professeur" value = "", style="margin-right: 10px;">
+          <div class="input-group row my-4">
+            <span class="col-sm-2 input-group-text"  for = "professeur" >Professeur</span>
+            <select class="form-select" name="professeur" id="professeur">
+              <option value = ""> Non renseigné </option>
+              <% dataProfesseur.forEach(function(data){ %>
+                  <option value="<%= data.id_perso %>"> <%= data.nom_perso %> <%= data.prenom_perso %> </option>
+              <% }) %>
+  
+            </select>
+          </div>
+          
 
-            <option value = ""> Non défini </option>
-
-            <% dataProfesseur.forEach(function(data){ %>
-                <option value = "<%= data.professeur_Id %>"> <%= data.nom_perso %> <%= data.prenom_perso %> </option>
-            <% }) %>
-
-          </select>
-
-          <div class="text-center">
-            <button type="submit" class="btn btn-primary">Envoyer</button>
+          <div class="text-center my-3">
+            <button type="submit" class="btn btn-block mx-3 text-light" style="background-color: #2e2ca2;">Envoyer</button>
           </div>
         </form>
       <% } %>

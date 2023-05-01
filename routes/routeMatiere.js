@@ -23,6 +23,8 @@ routeur.use((req, res, next) => {
   
 routeur.get('/', crtlAuth.authorize(3),ctrlMatiere.getMatiere);
 routeur.post('/ajouterMatiere', crtlAuth.authorize(3),ctrlMatiere.addMatiere);
+routeur.get('/modifierMatiere/:id',crtlAuth.authorize(3), ctrlMatiere.getOneMatiere);
+routeur.post('/modifierMatiere/:id', crtlAuth.authorize(3), ctrlMatiere.updateMatiere);
 routeur.get('/supprimerMatiere/:id', crtlAuth.authorize(3),ctrlMatiere.deleteMatiere);
 
 module.exports = routeur 

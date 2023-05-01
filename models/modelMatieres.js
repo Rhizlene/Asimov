@@ -44,13 +44,14 @@ const Matieres = {
 
     async getMatiereProfesseur(req){
 
-        let idProf = req.cookies.id
-        let requeteSQL = "SELECT * FROM matiere WHERE matiere.idProfesseur_matiere = ?"
+        let idProf = req.params.id
+        console.log(idProf);
+        let requeteSQL = "SELECT * FROM matiere WHERE matiere.id_matiere = ?"
 
         return new Promise((resolve, reject) => {
 
             mysqlconnexion.query(requeteSQL, [idProf], (error, elements) => {
-
+                console.log(requeteSQL);
                 if (error) {
 
                     return reject(error)
@@ -106,7 +107,7 @@ const Matieres = {
     async deleterMatiere(req){
 
         let id = req.params.id
-        let requeteSQL = "DELETE FROM matiere WHERE matiere_Id = ?"
+        let requeteSQL = "DELETE FROM matiere WHERE id_matiere  = ?"
 
         return new Promise((resolve, reject)=>{
 
@@ -123,6 +124,45 @@ const Matieres = {
             })
         })
     },
+    async updateMatiere(req){
+
+        let id = req.params.id
+        let nom = req.body.nom
+        let professeur = req.body.professeur
+        let requeteSQL = "UPDATE matiere SET nom_matiere = ?, idProfesseur_matiere  = ? WHERE id_matiere = ?"
+
+        return new Promise((resolve, reject)=>{
+
+            if(professeur){
+
+                mysqlconnexion.query(requeteSQL, [nom, professeur, id], (err, lignes, champs) => {
+
+                    if(err){
+
+                        return reject(err)
+
+                    }
+
+                    return resolve(lignes)
+
+                })
+            
+            }else{
+
+                mysqlconnexion.query(requeteSQL, [nom, null, id], (err, lignes, champs) => {
+
+                    if(err){
+
+                        return reject(err)
+
+                    }
+
+                    return resolve(lignes)
+
+                })
+            }
+        })
+    }
 }
 
 module.exports = {

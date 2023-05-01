@@ -1,0 +1,35 @@
+<% if(jwtData.roles == 2){%>
+  <%- include('headerProfesseur') %>
+<% }else if(jwtData.roles == 3){ %>
+  <%- include('headerProviseur') %>
+<% }else{ %>
+  <%- include('headerEleve') %>
+<% } %>
+<body>
+
+  <div class="container my-5 w-50 text-center">
+  
+    <h2 class="mb-4">Modifier un Professeur</h2>
+
+  <% dataProfesseur.forEach(function(data){ %>
+  
+    <form action="/professeurs/modifierProfesseur/<%= data.id_perso %>" method="POST" enctype="application/x-www-form-urlencoded">
+      
+      <div class="input-group row">
+        <span for="nom" class="col-sm-2 input-group-text">Nom</span>
+          <input type="text" class="form-control" name="nom" id="nom" value = "<%= data.nom_perso %>">
+      </div>
+      <div class="input-group row my-3">
+        <span for="prenom" class="col-sm-2 input-group-text">Prenom</span>
+          <input type="text" class="form-control" name="prenom" id="prenom" value = "<%= data.prenom_perso %>">
+      </div>
+      <div class="text-center my-3">
+        <button type="submit" class="btn btn-block mx-3 text-light" style="background-color: #2e2ca2;">Envoyer</button>
+      </div>
+    </form>
+  <% }) %>
+
+  </div>
+
+    
+</body>

@@ -87,7 +87,7 @@ const Professeurs = {
         let nom = req.body.nom
         let prenom = req.body.prenom
         let mdp = req.body.mdp
-        let requeteSQL = "INSERT INTO personnel (personnel.nom_perso, personnel.prenom_perso, personnel.mdp, personnel.role) VALUES(?,?, password(?), 2)"
+        let requeteSQL = "INSERT INTO personnel (personnel.nom_perso, personnel.prenom_perso, personnel.mdp, personnel.role) VALUES(?,?, ?, 2)"
 
         return new Promise((resolve, reject)=>{
 

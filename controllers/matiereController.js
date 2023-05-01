@@ -37,13 +37,14 @@ const controllerClasse = {
 			try{
 
 				const data1 = await modelMatiere.Matieres.getMatiereProfesseur(req)
+				console.log(data1);
 				const data2 = await modelProfesseurs.Professeurs.getProfesseurs()
 
                 const jwtData = res.locals.jwtData;
 			
 				if(data1){
 					
-					res.render("modifierMatieres", {dataMatiere:data1, role: jwtData.roles, dataProfesseur:data2 })
+					res.render("updateMatiere", {dataMatiere:data1, role: jwtData.roles, dataProfesseur:data2 })
 				
 				}else{
 
@@ -103,6 +104,29 @@ const controllerClasse = {
 			}
 		
 	
+	},
+	async updateMatiere(req, res){
+
+			try{
+
+				const data = await modelMatiere.Matieres.updateMatiere(req)
+				const jwtData = res.locals.jwtData;
+			
+				if(data){
+					
+					res.redirect("/matieres");
+				
+				}else{
+
+					res.render("erreur", {role: jwtData.roles})
+				}
+
+			}catch(error){
+
+				console.log(error)
+			}
+		
+		
 	}
 }
 

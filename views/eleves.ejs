@@ -28,8 +28,8 @@
                         <td><%= data.prenom_eleve %></td>
                         <td><%= dataClasse[data.id_classe - 1].nom_classe %></td>
                         <% if(jwtData.roles == 3){%>
-                            <td><a class="btn btn-outline-info btn-sm" href="http://localhost:4000/eleves/modifierEleve/<%=data.eleve_Id%>">Modifier</a></td>
-                            <td><a class="btn btn-outline-danger btn-sm" href="http://localhost:4000/eleves/supprimerEleve/<%=data.eleve_Id%>">Supprimer</a></td>
+                            <td><a class="btn btn-outline-info btn-sm" href="http://localhost:4000/eleves/modifierEleve/<%=data.eleve_Id%>">✏️</a></td>
+                            <td><a class="btn btn-outline-danger btn-sm" href="http://localhost:4000/eleves/supprimerEleve/<%=data.eleve_Id%>">❌</a></td>
                         <% } %>
                     </tr>
                 <% })%>

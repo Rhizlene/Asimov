@@ -69,7 +69,7 @@ const Classes = {
 
         return new Promise((resolve, reject)=>{
 
-            mysqlconnexion.query(requeteSQL, [nom, professeur], (err, lignes, champs) => {
+            mysqlconnexion.query(requeteSQL, [nom], (err, lignes, champs) => {
 
                 if(err){
 

@@ -11,12 +11,12 @@ const controllerProfesseur = {
 		
 			try{
 
-				const data1 = await modelProfesseur.Professeurs.getMatieresProfesseurs()
+				const data1 = await modelProfesseur.Professeurs.getProfesseurs()
                 const jwtData = res.locals.jwtData;
 
 				if(data1){
 					
-					res.render("profs", {role: jwtData.roles , dataTotale:data1})
+					res.render("professeurs", {role: jwtData.roles , dataTotale:data1})
 				
 				}else{
 
@@ -42,7 +42,7 @@ const controllerProfesseur = {
 
 				if(data1){
 					
-					res.render("modifierProfesseurs", {dataProfesseur: data1, dataMatiere:data2})
+					res.render("updateProf", {dataProfesseur: data1, dataMatiere:data2, role: jwtData.roles})
 				
 				}else{
 
@@ -66,7 +66,7 @@ const controllerProfesseur = {
 
 				if(data){
 					
-					res.redirect("/profs");
+					res.redirect("/professeurs");
 				
 				}else{
 
@@ -90,7 +90,7 @@ const controllerProfesseur = {
                 const jwtData = res.locals.jwtData;
 				if(data){
 					
-					res.redirect("/profs");
+					res.redirect("/professeurs");
 				
 				}else{
 
@@ -114,7 +114,7 @@ const controllerProfesseur = {
                 const jwtData = res.locals.jwtData;
 				if(data){
 					
-					res.redirect("/profs");
+					res.redirect("/professeurs");
 				
 				}else{
 

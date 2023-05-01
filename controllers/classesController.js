@@ -9,7 +9,6 @@ const controllerClasse = {
 			try{
 
 				const data1 = await modelClasses.Classes.getClasses()
-				// const data2 = await modelProfesseurs.Professeurs.afficherProfesseurs()
                 const jwtData = res.locals.jwtData;
 
 				if(data1){
@@ -36,10 +35,11 @@ const controllerClasse = {
 
 				const data1 = await modelClasses.Classes.getOneClasse(req)
 				// const data2 = await modelProfesseurs.Professeurs.afficherProfesseurs()
+				const jwtData = res.locals.jwtData;
 
 				if(data1){
 					
-					res.render("modifierClasses", {dataClasse:data1, role: jwtData.roles})
+					res.render("updateClasses", {dataClasse:data1, role: jwtData.roles})
 				
 				}else{
 

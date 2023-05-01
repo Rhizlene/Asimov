@@ -1,0 +1,44 @@
+<% if(jwtData.roles == 2){%>
+    <%- include('headerProfesseur') %>
+  <% }else if(jwtData.roles == 3){ %>
+    <%- include('headerProviseur') %>
+  <% }else{ %>
+    <%- include('headerEleve') %>
+  <% } %>
+  <body>
+  
+    <div class="container my-5 w-50 text-center">
+    
+      <h2 class="mb-4">Modifier une Matière</h2>
+  
+      <% dataMatiere.forEach(function(data){ %>
+        <form action="/matieres/modifierMatiere/<%= data.id_matiere %>" method="POST" enctype="application/x-www-form-urlencoded">
+        
+          <div>
+            <div class="input-group row">
+              <span for="nom" class="col-sm-2 input-group-text">Nom</span>
+                <input type="text" class="form-control" name="nom" id="nom" value="<%= data.nom_matiere %>">
+            </div>
+            <div class="input-group row my-4">
+              <span class="col-sm-2 input-group-text"  for = "professeur" >Professeur</span>
+              <select class="form-select" name="professeur" id="professeur">
+                <% dataProfesseur.forEach(function(data){ %>
+                  <% if (data.id_perso === dataMatiere[0].idProfesseur_matiere) { %>
+                    <option value="<%= data.id_perso %>" selected> <%= data.nom_perso %> <%= data.prenom_perso %> </option>
+                  <% } else { %>
+                   
+                    <option value="<%= data.id_perso %>"> <%= data.nom_perso %> <%= data.prenom_perso %> </option>
+                  <% } %>
+                <% }) %>
+              </select>
+            </div>
+              <div class="text-center my-3">
+                <button type="submit" class="btn btn-block mx-3 text-light" style="background-color: #2e2ca2;">Envoyer</button>
+              </div>
+        </form>
+      <% }) %>
+  
+    </div>
+  
+      
+  </body>
