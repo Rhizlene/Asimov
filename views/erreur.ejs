@@ -1,0 +1,19 @@
+<body>
+
+
+    <% if(jwtData.roles == 2){%>
+        <%- include('headerProfesseur') %>
+      <% }else if(jwtData.roles == 3){ %>
+        <%- include('headerProviseur') %>
+      <% }else{ %>
+        <%- include('headerEleve') %>
+      <% } %>
+
+   
+        <div class="alert m-5 alert-danger" role="alert">
+            Mince ! Il semblerait qu'il y ait eu une erreur...
+            </div>
+    
+    
+</body>
+</html>

@@ -25,8 +25,6 @@ const authAsimov = {
         let identifiant = req.body.identifiant
         let mdp = req.body.mdp
 
-      
-
         let requete = "SELECT *, COUNT(*) FROM personnel WHERE CONCAT(nom_perso, '.', prenom_perso) = ? AND mdp = ?"
 
         return new Promise((reussi, echec) => {

@@ -1,0 +1,96 @@
+
+
+<body>
+    <% if(jwtData.roles == 2){%>
+      <%- include('headerProfesseur') %>
+    <% }else if(jwtData.roles == 3){ %>
+      <%- include('headerProviseur') %>
+    <% }else{ %>
+      <%- include('headerEleve') %>
+    <% } %>
+  
+    <div class="container my-5 w-50">
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table rounded">
+              <thead>
+                <tr>
+                  <th class="w-25" scope="col">Matière</th>
+                  <th scope="col">Notes</th>
+                  <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
+                  <th scope="col">Modification</th>
+                  <th scope="col">Suppression</th>
+                  <% } %>
+                </tr>
+              </thead>
+              <tbody>
+                <% let currentMatiere = null; %>
+                <% dataNotes.forEach(function(data){ %>
+                <% if (data.nom_matiere !== currentMatiere) { %>
+                <% if (currentMatiere !== null) { %>
+                </tr>
+                <% } %>
+                <tr>
+                  <td><%= data.nom_matiere %></td>
+                  <td><%= data.note %></td>
+                  <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
+                  <td><a href="http://localhost:4000/notes/modifierNote/<%=data.note_Id%>" class="btn btn-warning">Modifier</a></td>
+                  <td><a href="http://localhost:4000/notes/supprimerNote/<%=data.note_Id%>" class="btn btn-danger">Supprimer</a></td>
+                  <% } %>
+                  <% currentMatiere = data.nom_matiere; %>
+                  <% } else { %>
+                  <td><%= data.note %></td>
+                  <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
+                  <td><a href="http://localhost:4000/notes/modifierNote/<%=data.note_Id%>" class="btn btn-warning">Modifier</a></td>
+                  <td><a href="http://localhost:4000/notes/supprimerNote/<%=data.note_Id%>" class="btn btn-danger">Supprimer</a></td>
+                  <% } %>
+                  <% } %>
+                <% }) %>
+                </tr>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="2">Moyenne Générale :</td>
+                  <td><%= dataMoyenne[0].moyenne_generale %></td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+      
+      
+
+  <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
+    <div id = 'ajout'>
+      <form action="/notes/ajouterNote" method="POST" enctype="application/x-www-form-urlencoded">
+        
+        <label for = "valeur", style = "margin-right: 10px;"> Valeur: </label>
+        <input type = "text" name = "valeur" id = "valeur" value = "", style="margin-right: 10px;">
+    
+        <label for = "matiere", style="margin-right: 10px;">Matière:</label>
+        <select type = "text" name = "matiere" id = "matiere" value = "", style="margin-right: 10px;">
+          <% if(jwtData.roles == 3){ %>
+            <% dataMatieres.forEach(function(data){ %>
+              <option value = "<%= data.matiere_Id %>"> <%= data.matiere_Nom %> </option>
+            <% }) %>
+          <% }else{ %>
+            <% dataMatieres2.forEach(function(data){ %>
+              <option value = "<%= data.matiere_Id %>"> <%= data.matiere_Nom %> </option>
+            <% }) %>
+          <% } %>
+        
+        </select>
+        
+        
+        <div style = "text-align: center; margin-top: 20px;">
+          <button type = "submit">
+            <div>Envoyer</div>
+          </button>
+        </div>
+      </form>
+    </div>
+  <% } %>
+
+</body>
+</html>

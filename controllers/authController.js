@@ -5,6 +5,7 @@ require('dotenv').config();
 const ACCESS_TOKEN_SECRET = process.env.ACCESS_TOKEN_SECRET;
 
 
+
 const controlAuth = {
 
     async Authentification(req, res) {
@@ -27,19 +28,29 @@ const controlAuth = {
             //opérateur ternaire pour assigner une valeur à la variable roles en fonction de la valeur des variables isPersonnel et isEleve
             //(condition) ? valeur_si_vrai : valeur_si_faux
             const roles = isPersonnel ? dataP[0]['role'] : isEleve ? dataE[0]['role'] : null;
+            const user = isPersonnel ? dataP[0]['id_perso'] : isEleve ? dataE[0]['id_eleve'] : null;
+            const classe = isEleve ? dataE[0]['id_classe'] : null;
             
             if (isPersonnel || isEleve) {
               // Générer un JWT contenant l'identifiant et les rôles de l'utilisateur
-              const accessToken = jwt.sign({ identifiant, roles }, ACCESS_TOKEN_SECRET);
+              const accessToken = jwt.sign({ user , identifiant, roles ,classe }, ACCESS_TOKEN_SECRET);
+             
               res.cookie('accessToken', accessToken);
+       
               const decodedToken = jwt.decode(accessToken);
               console.log(decodedToken);
-              const jwtData = { identifiant, roles };
+
+              const jwtData = { user , identifiant, roles ,classe };
               res.locals.jwtData = jwtData;
+
+
               return res.render('accueil', { jwtData : jwtData });
+
             } else {
+
               message = "Identifiant ou mot de passe incorrect";
               return res.render('auth', { message: message });
+
             }
         } catch (error) {
             console.log(error);
@@ -54,9 +65,9 @@ const controlAuth = {
     Accueil(req, res) {
 
         try {
-            const token = req.cookies.accessToken;
+            const token = req.cookies.accessToken ?? '';
             const decodedToken = jwt.verify(token, ACCESS_TOKEN_SECRET);
-            const jwtData = { identifiant: decodedToken.identifiant, roles: decodedToken.roles };
+            const jwtData = { user: decodedToken.user,identifiant: decodedToken.identifiant, roles: decodedToken.roles , classe: decodedToken.classe };
             return res.render('accueil', { jwtData });
         } catch (error) {
             console.log(error);
@@ -71,31 +82,35 @@ const controlAuth = {
 };
 
 // vérifier les rôles de l'utilisateur à partir du JWT
+// Verify user roles from JWT
 const authorize = (roles) => {
-    console.log('authorize', roles);
+    // console.log('authorize', roles);
     return (req, res, next) => {
-        const token = req.cookies.accessToken;
+      const token = req.cookies.accessToken ?? '';
+        
+      if (!token) {
+        return res.redirect("auth");
+      }
+  
+      try {
+        const decodedToken = jwt.verify(token, ACCESS_TOKEN_SECRET);
 
-        if (!token) {
-            return res.redirect("auth");
+        if (decodedToken.roles !== roles && !roles.includes(decodedToken.roles)) {
+          return res.status(401).send('Unauthorized');
         }
-
-        try {
-            const decodedToken = jwt.verify(token, ACCESS_TOKEN_SECRET);
-
-            if (!decodedToken.roles.includes(roles)) {
-                return res.status(401).send('Unauthorized');
-            }
-            console.log('authentifier');
-            next();
-        } catch (error) {
-            console.log(error);
-            return res.status(403).send('Forbidden');
-        }
+        console.log('authenticated');
+        next();
+      } catch (error) {
+        console.log(error);
+        return res.status(403).send('Forbidden');
+      }
     };
 };
 
+
 module.exports = {
     controlAuth,
+
     authorize
+   
 };

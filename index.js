@@ -14,6 +14,10 @@ app.use(express.static('public'))
 app.use(express.json());
 app.use(express.urlencoded());
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+const cookieParser = require('cookie-parser');
+
+
+app.use(cookieParser());
 
 app.listen(port, () => console.log('le serveur Asimov est prêt.'))
 
@@ -25,8 +29,19 @@ app.get('/', (req, res) => {
 
 // Importer les routes
 const routeAuth = require('./routes/routeAuth');
+const routeNotes = require('./routes/routeNotes');
+const routeClasses = require('./routes/routeClasses');
+const routeEleves = require('./routes/routeEleves');
+const routeMatieres = require('./routes/routeMatiere');
+const routeProfesseurs = require('./routes/routeProfesseur');
 
 
 // utiliser les routes
 app.use('/', routeAuth);
+app.use('/notes', routeNotes);
+app.use('/classes', routeClasses);
+app.use('/eleves', routeEleves);
+app.use('/matieres', routeMatieres);
+ app.use('/professeurs', routeProfesseurs);
+
 
