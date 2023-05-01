@@ -1,6 +1,7 @@
 const modelEleves = require('../models/modelEleves');
 const modelClasses = require('../models/modelClasse');
 const authConfig = require('../controllers/authController');
+const cookieParser = require('cookie-parser')
 
 const controllerEleve = {
 	
@@ -30,22 +31,22 @@ const controllerEleve = {
 	
 	},
 
-    async getElevesClasse(req, res) {
-        try {
-            const idClasse = req.params.idClasse; // Extraire l'id de la classe de l'URL
-            const data1 = await modelEleves.Eleves.getElevesClasse(idClasse);
-            const jwtData = res.locals.jwtData;
-    
-            if (data1) {
-                res.render("afficherUneClasse", { role: jwtData.roles, dataClasse: data1, idClasse });
-            } else {
-                res.render("erreur", { role: jwtData.roles });
-            }
-    
-        } catch (error) {
-            console.log(error);
-        }
-    },
+	async getElevesClasse(req, res) {
+		try {
+			const idClasse = req.params.id;
+	
+			const data1 = await modelEleves.Eleves.getElevesClasse(idClasse);
+			const jwtData = res.locals.jwtData;
+	
+			if (data1) {
+				res.render("uneClasse", { role: jwtData.roles, dataClasse: data1,  idClasse });
+			} else {
+				res.render("erreur", { role: jwtData.roles });
+			}
+		} catch (error) {
+			console.log(error);
+		}
+	},
 
      async getOneEleve(req, res){
 
@@ -57,7 +58,7 @@ const controllerEleve = {
                 const jwtData = res.locals.jwtData;
 				if(data){
 	
-					res.render("modifierEleves", {dataEleve: data, dataClasse:data2})
+					res.render("updateEleve", {dataEleve: data, dataClasse:data2})
 	
 				}else{
 	
@@ -99,7 +100,7 @@ async addEleve(req, res){
 		
 			try {
 
-				const data = await modelEleves.Eleves.deleteEleveEleve(req)
+				const data = await modelEleves.Eleves.deleteEleve(req)
                 const jwtData = res.locals.jwtData;
 				if(data){
 	

@@ -44,14 +44,12 @@ const Matieres = {
 
     async getMatiereProfesseur(req){
 
-        let idProf = req.params.id
-        console.log(idProf);
+        let id = req.params.id
         let requeteSQL = "SELECT * FROM matiere WHERE matiere.id_matiere = ?"
 
         return new Promise((resolve, reject) => {
 
-            mysqlconnexion.query(requeteSQL, [idProf], (error, elements) => {
-                console.log(requeteSQL);
+            mysqlconnexion.query(requeteSQL, [id], (error, elements) => {
                 if (error) {
 
                     return reject(error)

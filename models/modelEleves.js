@@ -62,27 +62,20 @@ const Eleves = {
         })
     },
 
-    async getElevesClasse(req, res){
-
-        let id = req.params.id
+    async getElevesClasse(idClasse) {
+        
         let requeteSQL = "SELECT * FROM eleve WHERE eleve.id_classe = ? ORDER BY eleve.nom_eleve"
-
+    
         return new Promise((resolve, reject) => {
-
-            mysqlconnexion.query(requeteSQL, [id], (error, elements) => {
-
+            mysqlconnexion.query(requeteSQL, [idClasse], (error, elements) => {
+                console.log('gfgd',idClasse)
                 if (error) {
-
                     return reject(error)
-
                 }
-
                 return resolve(elements)
-
             })
         })
     },
-
      async addEleve(req){
 
         let nom = req.body.nom

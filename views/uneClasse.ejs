@@ -1,0 +1,65 @@
+<body>
+
+    <% if(jwtData.roles == 2){%>
+        <%- include('headerProfesseur') %>
+      <% }else if(jwtData.roles == 3){ %>
+        <%- include('headerProviseur') %>
+      <% }else{ %>
+        <%- include('headerEleve') %>
+      <% } %>
+  
+      <div class="container w-25 p-5">
+        <table class="table text-center table-striped">
+  
+        <thead>
+  
+          <tr>
+          <th>Nom</th>
+          <th>Prenom</th>
+          </tr>
+  
+        </thead>
+  
+        <tbody>
+  
+          <% dataClasse.forEach(function(data){ %>
+            <tr>
+              <td> <a href="http://localhost:4000/notes/notesEleve/<%=data.id_eleve%>" style="text-decoration: none !important;"> <%= data.nom_eleve %> </a></td>
+              <td><%= data.prenom_eleve %></td>
+            </tr>
+          <% })%>
+  
+        </tbody>
+  
+      </table>
+  
+    </div>
+
+    
+  
+    <% if(jwtData.roles == 3){ %>
+      <div class="container w-25 text-center">
+        <hr class="my-3">
+
+        <h2 class="mb-4">Ajouter un Eleve</h2>
+        <form action="/eleves/ajouterEleve" method="POST" enctype="application/x-www-form-urlencoded">
+          <input type = "text" name = "classe" id = "classe" value = "<%= idClasse %>", style="margin-right: 10px;" hidden>
+          
+          <div class="input-group">
+            <span class="input-group-text col-sm-2" for="nom">Nom </span>
+            <input type="text" class="form-control" name="nom" id="nom" required>
+          </div>
+          <div class="input-group my-3">
+            <span class="input-group-text " for="prenom">Prénom </span>
+            <input type="text" class="form-control" name="prenom" id="prenom" required>
+          </div>
+         
+          <div class="text-center my-5">
+            <button type="submit" class="btn btn-block mx-3 text-light" style="background-color: #2e2ca2;">Envoyer</button>
+          </div>
+        </form>
+      </div>
+    <% } %>
+        
+  </body>
+  </html>

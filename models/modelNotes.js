@@ -21,7 +21,7 @@ mysqlconnexion.connect((err) => {
 
 const Notes = {
 
-    async afficherNotesEleve(req, res){
+    async getNotesEleve(req, res){
 
         let id = req.params.id
 
@@ -46,7 +46,6 @@ const Notes = {
         })
     },
 
-    //Fonction pour tous les utilisateurs : permet d'afficher la moyenne générale d'un élève
     
     async moyenneGenerale(req){
 
@@ -67,98 +66,100 @@ const Notes = {
 
             })
         })
+    },
+
+
+ async getOneNote(req) {
+
+    let id = req.params.id
+    let requeteSQL = "SELECT * FROM note WHERE id_note = ?"
+
+    res.cookie('idClasse', id)
+
+    return new Promise((resolve, reject) => {
+
+        mysqlconnexion.query(requeteSQL, [id], (error, elements) => {
+
+            if (error) {
+
+                return reject(error)
+
+            }
+
+            return resolve(elements)
+
+        })
+    })
+},
+
+async addNote(req){
+    let id = req.params.idEleve;
+    let matiere = req.body.matiere;
+    let valeur = req.body.valeur;
+
+    if (!id) {
+      throw new Error("L'id de l'élève est manquant.");
     }
 
-//     //Fonction pour le principal ou les professeurs : permet d'afficher une note en particulier
-//     async afficherUneNote(req) {
+    let requeteSQL = "INSERT INTO note (idEleve_note , id_matiere , note) VALUES(?,?,?)";
 
-//         let id = req.params.id
-//         let requeteSQL = "SELECT * FROM note WHERE note_Id = ?"
+    const parametres = [idEleve, idMatiere, note];
+  
+    return new Promise((resolve, reject) => {
+      mysqlconnexion.query(requeteSQL, parametres, (err, resultats) => {
+        if (err) {
+          reject(err);
+        } else {
+          resolve(resultats);
+        }
+      });
+    });
+  },
 
-//         return new Promise((resolve, reject) => {
+async deleteNote(req){
 
-//             mysqlconnexion.query(requeteSQL, [id], (error, elements) => {
+    let id = req.params.id
+    let requeteSQL = "DELETE FROM note WHERE id_note = ?"
 
-//                 if (error) {
+    return new Promise((resolve, reject)=>{
 
-//                     return reject(error)
+        mysqlconnexion.query(requeteSQL, [id], (err, lignes, champs) => {
 
-//                 }
+            if(err){
 
-//                 return resolve(elements)
+                return reject(err)
 
-//             })
-//         })
-//     },
+            }
 
-//     //Fonction pour le principal ou les professeurs : permet d'ajouter une note à un élève
-//     async ajouterNote(req){
+            return resolve(lignes)
 
-//         let eleve = req.cookies.idEleve
-//         let matiere = req.body.matiere
-//         let valeur = req.body.valeur
-//         let requeteSQL = "INSERT INTO note (note_IdEleve, note_IdMatiere, note_Valeur) VALUES(?,?,?)"
+        })
+    })
+},
 
-//         return new Promise((resolve, reject)=>{
+async updateNote(req){
 
-//             mysqlconnexion.query(requeteSQL, [eleve, matiere, valeur], (err, lignes, champs) => {
+    let id = req.params.id
+    let valeur = req.body.valeur
+    let requeteSQL = "UPDATE note SET note = ? WHERE id_note = ?"
 
-//                 if(err){
+    return new Promise((resolve, reject)=>{
 
-//                     return reject(err)
+        mysqlconnexion.query(requeteSQL, [valeur, id], (err, lignes, champs) => {
 
-//                 }
+            if(err){
 
-//                 return resolve(lignes)
+                return reject(err)
 
-//             })
-//         })
-//     },
+            }
 
-//     //Fonction pour le principal ou les professeurs : permet de supprimer une note à un élève
-//     async supprimerNote(req){
+            return resolve(lignes)
 
-//         let id = req.params.id
-//         let requeteSQL = "DELETE FROM note WHERE note_Id = ?"
+        })
+    })
+}
 
-//         return new Promise((resolve, reject)=>{
 
-//             mysqlconnexion.query(requeteSQL, [id], (err, lignes, champs) => {
-
-//                 if(err){
-
-//                     return reject(err)
-
-//                 }
-
-//                 return resolve(lignes)
-
-//             })
-//         })
-//     },
-
-//     //Fonction pour le principal ou les professeurs : permet de modifier une note d'un élève
-//     async modifierNote(req){
-
-//         let id = req.params.id
-//         let valeur = req.body.valeur
-//         let requeteSQL = "UPDATE note SET note_Valeur = ? WHERE note_Id = ?"
-
-//         return new Promise((resolve, reject)=>{
-
-//             mysqlconnexion.query(requeteSQL, [valeur, id], (err, lignes, champs) => {
-
-//                 if(err){
-
-//                     return reject(err)
-
-//                 }
-
-//                 return resolve(lignes)
-
-//             })
-//         })
-//     }
 }
 
 module.exports = {

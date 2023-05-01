@@ -1,0 +1,46 @@
+<% if(jwtData.roles == 2){%>
+    <%- include('headerProfesseur') %>
+  <% }else if(jwtData.roles == 3){ %>
+    <%- include('headerProviseur') %>
+  <% }else{ %>
+    <%- include('headerEleve') %>
+  <% } %>
+  <body>
+  
+    <div class="container my-5 w-50 text-center">
+    
+      <h2 class="mb-4">Modifier un Eleve</h2>
+
+<% dataEleve.forEach(function(data){ %>
+    <form action="/eleves/modifierEleve/<%= data.id_eleve %>" method="POST" enctype="application/x-www-form-urlencoded">
+      <div>
+        <div class="input-group row">
+            <span for="nom" class="col-sm-2 input-group-text">Nom</span>
+              <input type="text" class="form-control" name="nom" id="nom" value="<%= data.nom_eleve %>">
+          </div>
+          <div class="input-group row my-4">
+            <span for="prenom" class="col-sm-2 input-group-text">Prenom</span>
+              <input type="text" class="form-control" name="prenom" id="prenom" value="<%= data.prenom_eleve %>">
+          </div>
+          <div class="input-group row my-4">
+            <span class="col-sm-2 input-group-text"  for = "classe" >Classe</span>
+      <select class="form-select" name="classe" id="classe">
+        <% console.log(data)%>
+        <% console.log(dataClasse)%>
+        <option value = "<%= data.id_classe %>"><%= data.nom_classe %></option>
+        <% dataClasse.forEach(function(dataC){ %>
+          <% if(dataC.id_classe != data.id_classe){ %>
+            <option value = "<%= dataC.id_classe %>"><%= dataC.nom_classe %></option>
+          <% } %>
+        
+        <% }) %>
+
+      </select>
+      </div>
+      <div class="text-center my-3">
+        <button type="submit" class="btn btn-block mx-3 text-light" style="background-color: #2e2ca2;">Envoyer</button>
+      </div>
+    </form>
+  <% }) %>
+    </div>
+  </body>

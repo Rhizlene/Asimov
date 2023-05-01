@@ -26,27 +26,31 @@
               <tbody>
                 <% let currentMatiere = null; %>
                 <% dataNotes.forEach(function(data){ %>
-                <% if (data.nom_matiere !== currentMatiere) { %>
-                <% if (currentMatiere !== null) { %>
-                </tr>
-                <% } %>
-                <tr>
-                  <td><%= data.nom_matiere %></td>
-                  <td><%= data.note %></td>
-                  <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
-                  <td><a href="http://localhost:4000/notes/modifierNote/<%=data.note_Id%>" class="btn btn-warning">Modifier</a></td>
-                  <td><a href="http://localhost:4000/notes/supprimerNote/<%=data.note_Id%>" class="btn btn-danger">Supprimer</a></td>
-                  <% } %>
-                  <% currentMatiere = data.nom_matiere; %>
+                  <% if (data.nom_matiere !== currentMatiere) { %>
+                    <% if (currentMatiere !== null) { %>
+                      </tr>
+                    <% } %>
+                    <tr>
+                      <td><%= data.nom_matiere %></td>
+                      <td><%= data.note %></td>
+                      <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
+                        <td><a href="http://localhost:4000/notes/modifierNote/<%=data.id_note%>" class="btn btn-outline-info btn-sm">✏️</a></td>
+                        <td><a href="http://localhost:4000/notes/supprimerNote/<%=data.id_note%>" class="btn btn-outline-danger btn-sm">❌</a></td>
+                      <% } %>
+                      <% currentMatiere = data.nom_matiere; %>
                   <% } else { %>
-                  <td><%= data.note %></td>
-                  <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
-                  <td><a href="http://localhost:4000/notes/modifierNote/<%=data.note_Id%>" class="btn btn-warning">Modifier</a></td>
-                  <td><a href="http://localhost:4000/notes/supprimerNote/<%=data.note_Id%>" class="btn btn-danger">Supprimer</a></td>
-                  <% } %>
+                    <tr>
+                      <td></td>
+                      <td><%= data.note %></td>
+                      <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
+                        <td><a href="http://localhost:4000/notes/modifierNote/<%=data.id_note%>" class="btn btn-outline-info btn-sm">✏️</a></td>
+                        <td><a href="http://localhost:4000/notes/supprimerNote/<%=data.id_note%>" class="btn btn-outline-danger btn-sm">❌</a></td>
+                      <% } %>
                   <% } %>
                 <% }) %>
-                </tr>
+                <% if (currentMatiere !== null) { %>
+                  </tr>
+                <% } %>
               </tbody>
               <tfoot>
                 <tr>
@@ -57,40 +61,42 @@
             </table>
           </div>
         </div>
-      </div>
+      
       
       
 
   <% if(jwtData.roles == 2 || jwtData.roles == 3){ %>
-    <div id = 'ajout'>
+    <div>
       <form action="/notes/ajouterNote" method="POST" enctype="application/x-www-form-urlencoded">
+      
+        <div class="input-group">
+          <span class="input-group-text col-sm-2" for="valeur">Valeur </span>
+          <input type="text" class="form-control" name="valeur" id="valeur" required>
+        </div>
+        <div class="input-group row my-4">
+          <span class="col-sm-2 input-group-text"  for = "matiere" >Matière</span>
+          <select class="form-select" name="matiere" id="matiere">
+            <% if(jwtData.roles == 3){ %>
+              
+              <% dataMatieres.forEach(function(data){ %>
+                <option value = "<%= data.id_matiere %>"> <%= data.nom_matiere %> </option>
+              <% }) %>
+            <% }else{ %>
+              <% dataMatieres2.forEach(function(data){ %>
+                <option value = "<%= data.id_matiere %>"> <%= data.nom_matiere %> </option>
+              <% }) %>
+            <% } %>
+          </select>
+        </div>
         
-        <label for = "valeur", style = "margin-right: 10px;"> Valeur: </label>
-        <input type = "text" name = "valeur" id = "valeur" value = "", style="margin-right: 10px;">
-    
-        <label for = "matiere", style="margin-right: 10px;">Matière:</label>
-        <select type = "text" name = "matiere" id = "matiere" value = "", style="margin-right: 10px;">
-          <% if(jwtData.roles == 3){ %>
-            <% dataMatieres.forEach(function(data){ %>
-              <option value = "<%= data.matiere_Id %>"> <%= data.matiere_Nom %> </option>
-            <% }) %>
-          <% }else{ %>
-            <% dataMatieres2.forEach(function(data){ %>
-              <option value = "<%= data.matiere_Id %>"> <%= data.matiere_Nom %> </option>
-            <% }) %>
-          <% } %>
-        
-        </select>
-        
-        
-        <div style = "text-align: center; margin-top: 20px;">
-          <button type = "submit">
-            <div>Envoyer</div>
-          </button>
+        <div class="text-center my-3">
+          <button type="submit" class="btn btn-block mx-3 text-light" style="background-color: #2e2ca2;">Envoyer</button>
         </div>
       </form>
     </div>
   <% } %>
+
+</div>
 
 </body>
 </html>

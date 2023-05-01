@@ -20,7 +20,11 @@ routeur.use((req, res, next) => {
   next();
 });
 
-routeur.get('/mesNotes', crtlAuth.authorize(1), ctrlNote.controllerNotes.redirectionNoteEleve);
-routeur.get('/notesEleve/:id', crtlAuth.authorize(1), ctrlNote.controllerNotes.affichageNote);
+routeur.get('/mesNotes', crtlAuth.authorize([1,2,3]), ctrlNote.controllerNotes.redirectionNoteEleve);
+routeur.get('/notesEleve/:id', crtlAuth.authorize([1,2,3]), ctrlNote.controllerNotes.getNote);
+routeur.post('/ajouterNote', crtlAuth.authorize([2,3]),ctrlNote.controllerNotes.addNote);
+routeur.get('/modifierNote/:id', crtlAuth.authorize([2,3]),ctrlNote.controllerNotes.getOneNote);
+routeur.post('/modifierNote/:id', crtlAuth.authorize([2,3]),ctrlNote.controllerNotes.updateNote);
+routeur.get('/supprimerNote/:id', crtlAuth.authorize([2,3]),ctrlNote.controllerNotes.deleteNote);
 
 module.exports = routeur;
